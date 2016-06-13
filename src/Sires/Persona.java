@@ -46,6 +46,10 @@ public class Persona extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tDatos = new javax.swing.JTable();
 
+        setClosable(true);
+        setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 92));
