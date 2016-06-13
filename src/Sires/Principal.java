@@ -104,6 +104,11 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/personas.jpg"))); // NOI18N
         jMenuItem1.setText("Personas");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/centro.jpg"))); // NOI18N
@@ -146,6 +151,13 @@ public class Principal extends javax.swing.JFrame {
         escritorio.add(eS);
         eS.setVisible(true);
     }//GEN-LAST:event_entradaSalidaActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // PERSONAS:
+        Persona pe = new Persona();
+        escritorio.add(pe);
+        pe.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
