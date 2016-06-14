@@ -22,13 +22,26 @@ public class Persona extends javax.swing.JInternalFrame {
         registros();
     }
     void registrar(){
-        String identificaciones, nombre, apellido, telefonos, correos, tId, idCentros="null", idRoles="null", claves;
+        String identificaciones, nombre, apellido, telefonos, correos, tId="null", idCentros="null", idRoles="null", claves;
         identificaciones=identificacion.getText();
         nombre=nombres.getText();
         apellido=apellidos.getText();
         telefonos=telefono.getText();
         correos=correo.getText();
-        tId=tipoId.getSelectedItem().toString();
+        //tId=tipoId.getSelectedItem().toString();
+        switch(tipoId.getSelectedItem().toString()){
+            case "Tarjeta de Identidad":
+                tId="1";
+            break;
+            case "Cedula de Ciudadanía":
+                tId="2";
+            break;
+            case "Cedula de Extranjeria":
+                tId="3";
+            break;
+            case "Seleccione...":
+                JOptionPane.showMessageDialog(null,"Seleccione un Centro");       
+        }
         switch(idCentro.getSelectedItem().toString()){
             case "CEAI":
                 idCentros="1";
@@ -46,48 +59,47 @@ public class Persona extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null,"Seleccione un Centro");       
         }
         switch(idRol.getSelectedItem().toString()){
-            case "CEAI":
+            case "Funcionario":
                 idRoles="1";
             break;
-            case "CDTI":
+            case "Aprendiz":
                 idRoles="2";
             break;
-            case "ASTIN":
+            case "Operario":
                 idRoles="3";
             break;
-            case "CGTS":
+            case "Visitante":
                 idRoles="4";
             break;
             case "Seleccione...":
                 JOptionPane.showMessageDialog(null,"Seleccione un Centro");       
         }
         claves=clave.getText();
-        String sql="INSERT INTO persona(identificacion, nombre, apellido, , tipoID, telefono, correo, clave, id_rol, id_centro)"
+        String sql="INSERT INTO persona(identificacion, nombre, apellido, tipoID, telefono, correo, clave, id_rol, id_centro)"
                 + "VALUES (?,?,?,?,?,?,?,?,?)";
         Conect cone = new Conect();
         Connection con=cone.conexion();
         
         try {
-            
-                    PreparedStatement pst=con.prepareStatement(sql);
-                    pst.setString(1,identificaciones);
-                    pst.setString(2,nombre);
-                    pst.setString(3,apellido);
-                    pst.setString(4,tId);
-                    pst.setString(5,telefonos);
-                    pst.setString(6,correos);
-                    pst.setString(7,claves);
-                    pst.setString(8,idRoles);
-                    pst.setString(9,idCentros);
-                    int n=pst.executeUpdate();
-                    if(n>0){
-                        JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
-                        limpiar();
-                    }
-                    tDatos.setModel(modelo);
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, ex);
+            PreparedStatement pst=con.prepareStatement(sql);
+            pst.setString(1,identificaciones);
+            pst.setString(2,nombre);
+            pst.setString(3,apellido);
+            pst.setString(4,tId);
+            pst.setString(5,telefonos);
+            pst.setString(6,correos);
+            pst.setString(7,claves);
+            pst.setString(8,idRoles);
+            pst.setString(9,idCentros);
+            int n=pst.executeUpdate();
+            if(n>0){
+                JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+                limpiar();
             }
+            tDatos.setModel(modelo);
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+        }
     }
     void registros(){
         String [] titulos={"NOMBRES","APELLIDOS","IDENTIFICACION","TIPO ID","TELEFONO","CORREO"};
@@ -101,12 +113,16 @@ public class Persona extends javax.swing.JInternalFrame {
             Statement st=con.createStatement();
             ResultSet rs=st.executeQuery(sql);
             while(rs.next()){
-                registros[0]=rs.getString("cedula");
+                registros[0]=rs.getString("nombre");
+                registros[1]=rs.getString("apellido");
+                registros[2]=rs.getString("identificacion");
+                registros[3]=rs.getString("tipoID");
+                registros[4]=rs.getString("telefono");
+                registros[5]=rs.getString("correo");
                 modelo.addRow(registros);
             }
             tDatos.setModel(modelo);
-        } 
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
     }
@@ -208,6 +224,11 @@ public class Persona extends javax.swing.JInternalFrame {
         });
 
         idRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "Funcionario", "Aprendiz", "Operario", "Visitante" }));
+        idRol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idRolActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel9.setText("ROL");
@@ -378,6 +399,10 @@ public class Persona extends javax.swing.JInternalFrame {
         registrar();
         registros();
     }//GEN-LAST:event_registrarActionPerformed
+
+    private void idRolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idRolActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idRolActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField apellidos;
