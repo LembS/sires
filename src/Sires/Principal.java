@@ -117,6 +117,11 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/vehiculos.jpg"))); // NOI18N
         jMenuItem3.setText("Vehiculos");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         entradaSalida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/entrada.jpg"))); // NOI18N
@@ -130,6 +135,11 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/objetos.jpg"))); // NOI18N
         jMenuItem5.setText("Objetos");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem5);
 
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/novedad.jpg"))); // NOI18N
@@ -149,15 +159,27 @@ public class Principal extends javax.swing.JFrame {
     private void entradaSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entradaSalidaActionPerformed
         EntradaSalida eS = new EntradaSalida();
         escritorio.add(eS);
-        eS.setVisible(true);
+        eS.show();
     }//GEN-LAST:event_entradaSalidaActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // PERSONAS:
         Persona pe = new Persona();
         escritorio.add(pe);
-        pe.setVisible(true);
+        pe.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+         Objetos ob = new Objetos();
+        escritorio.add(ob);
+        ob.show();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        vehiculos ve = new vehiculos();
+        escritorio.add(ve);
+        ve.show();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
