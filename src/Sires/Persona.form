@@ -2,6 +2,7 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
+    <Property name="closable" type="boolean" value="true"/>
     <Property name="iconifiable" type="boolean" value="true"/>
   </Properties>
   <SyntheticProperties>
@@ -293,10 +294,10 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="5">
                     <StringItem index="0" value="Seleccione..."/>
-                    <StringItem index="1" value="111"/>
-                    <StringItem index="2" value="222"/>
-                    <StringItem index="3" value="333"/>
-                    <StringItem index="4" value="444"/>
+                    <StringItem index="1" value="Funcionario"/>
+                    <StringItem index="2" value="Aprendiz"/>
+                    <StringItem index="3" value="Operario"/>
+                    <StringItem index="4" value="Visitante"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -340,8 +341,8 @@
                   <StringArray count="4">
                     <StringItem index="0" value="Seleccione..."/>
                     <StringItem index="1" value="Tarjeta de Identidad"/>
-                    <StringItem index="2" value="C&#xe9;dula de Ciudadan&#xed;a"/>
-                    <StringItem index="3" value="C&#xe9;dula de Extranjeria"/>
+                    <StringItem index="2" value="Cedula de Ciudadan&#xed;a"/>
+                    <StringItem index="3" value="Cedula de Extranjeria"/>
                   </StringArray>
                 </Property>
               </Properties>

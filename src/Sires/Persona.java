@@ -6,9 +6,109 @@
  * Fecha 10/06/2016
  */
 package Sires;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class Persona extends javax.swing.JInternalFrame {
+    DefaultTableModel modelo;
     public Persona() {
         initComponents();
+        registros();
+    }
+    void registrar(){
+        String identificaciones, nombre, apellido, telefonos, correos, tId, idCentros="null", idRoles="null", claves;
+        identificaciones=identificacion.getText();
+        nombre=nombres.getText();
+        apellido=apellidos.getText();
+        telefonos=telefono.getText();
+        correos=correo.getText();
+        tId=tipoId.getSelectedItem().toString();
+        switch(idCentro.getSelectedItem().toString()){
+            case "CEAI":
+                idCentros="1";
+            break;
+            case "CDTI":
+                idCentros="2";
+            break;
+            case "ASTIN":
+                idCentros="3";
+            break;
+            case "CGTS":
+                idCentros="4";
+            break;
+            case "Seleccione...":
+                JOptionPane.showMessageDialog(null,"Seleccione un Centro");       
+        }
+        switch(idRol.getSelectedItem().toString()){
+            case "CEAI":
+                idRoles="1";
+            break;
+            case "CDTI":
+                idRoles="2";
+            break;
+            case "ASTIN":
+                idRoles="3";
+            break;
+            case "CGTS":
+                idRoles="4";
+            break;
+            case "Seleccione...":
+                JOptionPane.showMessageDialog(null,"Seleccione un Centro");       
+        }
+        claves=clave.getText();
+        String sql="INSERT INTO persona(identificacion, nombre, apellido, , tipoID, telefono, correo, clave, id_rol, id_centro)"
+                + "VALUES (?,?,?,?,?,?,?,?,?)";
+        Conect cone = new Conect();
+        Connection con=cone.conexion();
+        
+        try {
+            
+                    PreparedStatement pst=con.prepareStatement(sql);
+                    pst.setString(1,identificaciones);
+                    pst.setString(2,nombre);
+                    pst.setString(3,apellido);
+                    pst.setString(4,tId);
+                    pst.setString(5,telefonos);
+                    pst.setString(6,correos);
+                    pst.setString(7,claves);
+                    pst.setString(8,idRoles);
+                    pst.setString(9,idCentros);
+                    int n=pst.executeUpdate();
+                    if(n>0){
+                        JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+                        limpiar();
+                    }
+                    tDatos.setModel(modelo);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, ex);
+            }
+    }
+    void registros(){
+        String [] titulos={"NOMBRES","APELLIDOS","IDENTIFICACION","TIPO ID","TELEFONO","CORREO"};
+        String [] registros=new String[6];
+        String sql="SELECT nombre, apellido, identificacion, tipoID, telefono, correo FROM persona";
+        modelo=new DefaultTableModel(null,titulos);
+        Conect cone = new Conect();
+        Connection con=cone.conexion();
+        
+        try {
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery(sql);
+            while(rs.next()){
+                registros[0]=rs.getString("cedula");
+                modelo.addRow(registros);
+            }
+            tDatos.setModel(modelo);
+        } 
+        catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }
     void limpiar(){
         identificacion.setText("");
@@ -55,6 +155,7 @@ public class Persona extends javax.swing.JInternalFrame {
         buscar = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
 
+        setClosable(true);
         setIconifiable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -106,7 +207,7 @@ public class Persona extends javax.swing.JInternalFrame {
             }
         });
 
-        idRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "111", "222", "333", "444" }));
+        idRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "Funcionario", "Aprendiz", "Operario", "Visitante" }));
 
         jLabel9.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel9.setText("ROL");
@@ -127,7 +228,7 @@ public class Persona extends javax.swing.JInternalFrame {
             }
         });
 
-        tipoId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "Tarjeta de Identidad", "Cédula de Ciudadanía", "Cédula de Extranjeria" }));
+        tipoId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione...", "Tarjeta de Identidad", "Cedula de Ciudadanía", "Cedula de Extranjeria" }));
         tipoId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tipoIdActionPerformed(evt);
@@ -274,8 +375,8 @@ public class Persona extends javax.swing.JInternalFrame {
 
     private void registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarActionPerformed
         // Registrar personas
-        Conect cone = new Conect();
-       // Connection con=cone.conexion();
+        registrar();
+        registros();
     }//GEN-LAST:event_registrarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
