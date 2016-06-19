@@ -5,6 +5,9 @@
  */
 package Sires;
 
+import java.awt.Image;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author felipe
@@ -16,6 +19,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        portada();
     }
 
     /**
@@ -28,81 +32,29 @@ public class Principal extends javax.swing.JFrame {
     private void initComponents() {
 
         escritorio = new javax.swing.JDesktopPane();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        entradaSalida = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        entradaSalida = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         escritorio.setBackground(new java.awt.Color(0, 153, 92));
         escritorio.setFont(new java.awt.Font("Comic Sans MS", 0, 11)); // NOI18N
-
-        jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel1.setText("BIENVENIDO");
-
-        jLabel2.setFont(new java.awt.Font("Comic Sans MS", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel2.setText("S.I.R.E.S");
-
-        jLabel3.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel3.setText("Sistema Informatico de Registro de Entrada y Salida");
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/descarga.png"))); // NOI18N
-
-        escritorio.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        escritorio.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        escritorio.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        escritorio.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout escritorioLayout = new javax.swing.GroupLayout(escritorio);
-        escritorio.setLayout(escritorioLayout);
-        escritorioLayout.setHorizontalGroup(
-            escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(escritorioLayout.createSequentialGroup()
-                .addGap(290, 290, 290)
-                .addComponent(jLabel1))
-            .addGroup(escritorioLayout.createSequentialGroup()
-                .addGap(310, 310, 310)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(escritorioLayout.createSequentialGroup()
-                .addGap(310, 310, 310)
-                .addComponent(jLabel2))
-            .addGroup(escritorioLayout.createSequentialGroup()
-                .addGap(210, 210, 210)
-                .addComponent(jLabel3))
-        );
-        escritorioLayout.setVerticalGroup(
-            escritorioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(escritorioLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabel1)
-                .addGap(39, 39, 39)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel2)
-                .addGap(9, 9, 9)
-                .addComponent(jLabel3))
-        );
+        escritorio.add(jLabel5);
+        jLabel5.setBounds(0, 0, 780, 530);
 
         getContentPane().add(escritorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 530));
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/modulos.jpg"))); // NOI18N
         jMenu1.setText("Modulos");
 
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/personas.jpg"))); // NOI18N
         jMenuItem1.setText("Personas");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,11 +63,6 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/centro.jpg"))); // NOI18N
-        jMenuItem2.setText("Centro de Formacion");
-        jMenu1.add(jMenuItem2);
-
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/vehiculos.jpg"))); // NOI18N
         jMenuItem3.setText("Vehiculos");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,16 +71,6 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem3);
 
-        entradaSalida.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/entrada.jpg"))); // NOI18N
-        entradaSalida.setText("Entrada y Salida");
-        entradaSalida.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                entradaSalidaActionPerformed(evt);
-            }
-        });
-        jMenu1.add(entradaSalida);
-
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/objetos.jpg"))); // NOI18N
         jMenuItem5.setText("Objetos");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,13 +79,34 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem5);
 
-        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/novedad.jpg"))); // NOI18N
-        jMenuItem6.setText("Novedad");
-        jMenu1.add(jMenuItem6);
-
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Salir");
+        jMenu2.setText("Entrada Salida");
+
+        entradaSalida.setText("Entrada y Salida");
+        entradaSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                entradaSalidaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(entradaSalida);
+
+        jMenuItem4.setText("Historial");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem4);
+
+        jMenuItem2.setText("Vehiculos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -181,6 +139,25 @@ public class Principal extends javax.swing.JFrame {
         ve.show();
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        vehiculosES ve = new vehiculosES();
+        escritorio.add(ve);
+        ve.show();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        historialES ve = new historialES();
+        escritorio.add(ve);
+        ve.show();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    
+    void portada(){
+        ImageIcon imagen = new ImageIcon(getClass().getResource("../imagenes/sires.png"));
+        Image conversion =imagen.getImage();
+        Image tamaño =conversion.getScaledInstance(783,575, Image.SCALE_SMOOTH);
+        ImageIcon fin=new ImageIcon(tamaño);
+        jLabel5.setIcon(fin);
+    }
     /**
      * @param args the command line arguments
      */
@@ -219,17 +196,14 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem entradaSalida;
     private javax.swing.JDesktopPane escritorio;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
     // End of variables declaration//GEN-END:variables
 }

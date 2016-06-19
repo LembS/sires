@@ -7,15 +7,17 @@
  */
 package Sires;
 
-import java.awt.Color;
-import java.awt.FlowLayout;
+
+import java.awt.Image;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.swing.JLabel;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /* AUTHOR ADSI-108
@@ -23,13 +25,22 @@ import javax.swing.table.DefaultTableModel;
 *Fecha 06/10/2016
 */
 public class EntradaSalida extends javax.swing.JInternalFrame {
-
+    DefaultTableModel modelo;
+    DefaultListModel modelist=new DefaultListModel();
+    DefaultListModel modelist2=new DefaultListModel();
+    String codigo;
+    String vehiculoCOD;
     /*
       Creates new form EntradaSalida
      */
     public EntradaSalida() {
         initComponents();
         vNo.setSelected(true);
+        vSi.setEnabled(false);
+        vNo.setEnabled(false);
+        listOBJ.setModel(modelist);
+        codOBJ.setModel(modelist2);
+        imagen();
     }
 
     /**
@@ -41,15 +52,19 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        objeto = new javax.swing.JFrame();
-        equipo = new javax.swing.JRadioButton();
-        elemento = new javax.swing.JRadioButton();
-        accesorio = new javax.swing.JRadioButton();
-        opcion = new javax.swing.JComboBox<>();
-        aceptarObj = new javax.swing.JButton();
-        cancelarObj = new javax.swing.JButton();
         objetoTipo = new javax.swing.ButtonGroup();
         checkVehiculo = new javax.swing.ButtonGroup();
+        objeto = new javax.swing.JFrame();
+        objetoContent = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        objetosES = new JTable(){
+
+            public boolean isCellEditable(int rowIndex, int colIndex) {
+
+                return false; //Las celdas no son editables.
+
+            }
+        };
         persona = new javax.swing.JPanel();
         datos = new javax.swing.JPanel();
         nombre = new javax.swing.JLabel();
@@ -58,91 +73,77 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
         rol = new javax.swing.JLabel();
         ejemplo = new javax.swing.JTextField();
         ejemploB = new javax.swing.JButton();
-        foto = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        objetos = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        codOBJ = new javax.swing.JList<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listOBJ = new javax.swing.JList<>();
         vehiculo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         vNo = new javax.swing.JRadioButton();
         vSi = new javax.swing.JRadioButton();
         tipoV = new javax.swing.JLabel();
         placa = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        objetoScroll = new javax.swing.JScrollPane();
-        objetos = new javax.swing.JPanel();
         agregar = new javax.swing.JButton();
+        operador = new javax.swing.JLabel();
+        registrar = new javax.swing.JButton();
+        fondo = new javax.swing.JLabel();
 
-        objetoTipo.add(equipo);
-        equipo.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        equipo.setText("Equipo");
+        objetosES.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
 
-        objetoTipo.add(elemento);
-        elemento.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        elemento.setText("Elemento");
-
-        objetoTipo.add(accesorio);
-        accesorio.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        accesorio.setText("Accesorio");
-
-        opcion.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        opcion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lenovo", "Alien Ware", "Asus" }));
-
-        aceptarObj.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        aceptarObj.setText("Aceptar");
-        aceptarObj.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aceptarObjActionPerformed(evt);
+            }
+        ));
+        objetosES.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                objetosESMouseClicked(evt);
             }
         });
+        jScrollPane1.setViewportView(objetosES);
 
-        cancelarObj.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        cancelarObj.setText("Cancelar");
-        cancelarObj.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelarObjActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout objetoContentLayout = new javax.swing.GroupLayout(objetoContent);
+        objetoContent.setLayout(objetoContentLayout);
+        objetoContentLayout.setHorizontalGroup(
+            objetoContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(objetoContentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        objetoContentLayout.setVerticalGroup(
+            objetoContentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, objetoContentLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout objetoLayout = new javax.swing.GroupLayout(objeto.getContentPane());
         objeto.getContentPane().setLayout(objetoLayout);
         objetoLayout.setHorizontalGroup(
             objetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(objetoLayout.createSequentialGroup()
-                .addGroup(objetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, objetoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(opcion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(objetoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(equipo)
-                        .addGap(18, 18, 18)
-                        .addComponent(elemento)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(accesorio)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(objetoContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, objetoLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(aceptarObj)
-                .addGap(18, 18, 18)
-                .addComponent(cancelarObj)
-                .addGap(77, 77, 77))
         );
         objetoLayout.setVerticalGroup(
             objetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(objetoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(objetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(equipo)
-                    .addComponent(elemento)
-                    .addComponent(accesorio))
-                .addGap(18, 18, 18)
-                .addComponent(opcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addGroup(objetoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(aceptarObj)
-                    .addComponent(cancelarObj))
+                .addComponent(objetoContent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        persona.setOpaque(false);
+
+        datos.setOpaque(false);
 
         nombre.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         nombre.setText("Nombre");
@@ -171,9 +172,11 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
                 .addGroup(datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(nombre)
                     .addComponent(apellidos)
-                    .addComponent(id)
-                    .addComponent(rol))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                    .addGroup(datosLayout.createSequentialGroup()
+                        .addComponent(id)
+                        .addGap(18, 18, 18)
+                        .addComponent(rol)))
+                .addGap(0, 162, Short.MAX_VALUE)
                 .addGroup(datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(ejemploB)
                     .addComponent(ejemplo, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -185,39 +188,17 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
                 .addComponent(nombre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(apellidos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(id)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rol)
+                .addGroup(datosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(id)
+                    .addComponent(rol))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(datosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(ejemplo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
                 .addComponent(ejemploB)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        foto.setBackground(new java.awt.Color(177, 245, 254));
-
-        jLabel5.setFont(new java.awt.Font("FreeSans", 0, 15)); // NOI18N
-        jLabel5.setText("Foto");
-
-        javax.swing.GroupLayout fotoLayout = new javax.swing.GroupLayout(foto);
-        foto.setLayout(fotoLayout);
-        fotoLayout.setHorizontalGroup(
-            fotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(fotoLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel5)
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-        fotoLayout.setVerticalGroup(
-            fotoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(fotoLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(jLabel5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout personaLayout = new javax.swing.GroupLayout(persona);
@@ -225,9 +206,7 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
         personaLayout.setHorizontalGroup(
             personaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(personaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(foto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(37, 37, 37)
                 .addComponent(datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -235,10 +214,62 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
             personaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, personaLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(personaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(foto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        objetos.setOpaque(false);
+
+        codOBJ.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "12345" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        codOBJ.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                codOBJValueChanged(evt);
+            }
+        });
+        jScrollPane3.setViewportView(codOBJ);
+
+        listOBJ.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", " " };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        listOBJ.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listOBJMouseClicked(evt);
+            }
+        });
+        listOBJ.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listOBJValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(listOBJ);
+
+        javax.swing.GroupLayout objetosLayout = new javax.swing.GroupLayout(objetos);
+        objetos.setLayout(objetosLayout);
+        objetosLayout.setHorizontalGroup(
+            objetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, objetosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
+        );
+        objetosLayout.setVerticalGroup(
+            objetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(objetosLayout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(objetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        vehiculo.setOpaque(false);
 
         jLabel1.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         jLabel1.setText("Vehiculo");
@@ -267,37 +298,28 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
         placa.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
         placa.setText("Placa");
 
-        jLabel2.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
-        jLabel2.setText("Operador");
-
         javax.swing.GroupLayout vehiculoLayout = new javax.swing.GroupLayout(vehiculo);
         vehiculo.setLayout(vehiculoLayout);
         vehiculoLayout.setHorizontalGroup(
             vehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(vehiculoLayout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, vehiculoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(48, Short.MAX_VALUE)
                 .addGroup(vehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(placa)
                     .addComponent(tipoV)
                     .addGroup(vehiculoLayout.createSequentialGroup()
                         .addComponent(vSi)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(vNo)))
-                .addGap(38, 38, 38))
-            .addGroup(vehiculoLayout.createSequentialGroup()
-                .addGroup(vehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(vehiculoLayout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(jLabel1))
-                    .addGroup(vehiculoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(37, 37, 37))
         );
         vehiculoLayout.setVerticalGroup(
             vehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(vehiculoLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(vehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -307,9 +329,7 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
                 .addComponent(tipoV)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(placa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         agregar.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
@@ -320,88 +340,101 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
             }
         });
 
-        javax.swing.GroupLayout objetosLayout = new javax.swing.GroupLayout(objetos);
-        objetos.setLayout(objetosLayout);
-        objetosLayout.setHorizontalGroup(
-            objetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, objetosLayout.createSequentialGroup()
-                .addContainerGap(188, Short.MAX_VALUE)
-                .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        objetosLayout.setVerticalGroup(
-            objetosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(objetosLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(agregar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        operador.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        operador.setText("Operador");
 
-        objetoScroll.setViewportView(objetos);
+        registrar.setText("Registrar");
+        registrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(418, 418, 418)
+                .addComponent(agregar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(387, 387, 387)
+                .addComponent(registrar))
+            .addComponent(persona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(191, 191, 191)
+                .addComponent(objetos, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
-                .addComponent(persona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(operador))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(vehiculo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(objetoScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(vehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(fondo, javax.swing.GroupLayout.PREFERRED_SIZE, 470, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(persona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(vehiculo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(objetoScroll)
-                        .addContainerGap())))
+                .addGap(135, 135, 135)
+                .addComponent(agregar))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(343, 343, 343)
+                .addComponent(registrar))
+            .addComponent(persona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(179, 179, 179)
+                .addComponent(objetos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(347, 347, 347)
+                .addComponent(operador))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(179, 179, 179)
+                .addComponent(vehiculo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(fondo, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+  
     /*
         Agrega un frame encargado de filtrar consultar y seleccionar un objeto
         perteneciente a la persona que realiza el ingreso.  
     */
     private void agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarActionPerformed
-        objeto.setSize(300,155);
+        objeto.setSize(600,300);
         objeto.setVisible(true);
         
+        String [] titulos={"Descripcion","Serial","Modelo","Tipo","Codigo"};
+        String [] registros=new String[5];
+        String sql="SELECT objetos.codigo,descripcion, serial, modelo, desc_obj FROM objetos "
+                + "INNER JOIN tipo_obj ON tipo_obj.codigo_obj=objetos.tipo_obj "
+                + "INNER JOIN persona ON persona.codigo=objetos.codigo_persona "
+                + "WHERE persona.codigo="+codigo;
+        modelo=new DefaultTableModel(null,titulos);
+        Conect cone = new Conect();
+        Connection con=cone.conexion();
+        
+        try {
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery(sql);
+            while(rs.next()){
+                registros[0]=rs.getString("descripcion");
+                registros[1]=rs.getString("serial");
+                registros[2]=rs.getString("modelo");
+                registros[3]=rs.getString("desc_obj");
+                registros[4]=rs.getString("objetos.codigo");
+                modelo.addRow(registros);
+            }
+            objetosES.setModel(modelo);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        
+        
+        
     }//GEN-LAST:event_agregarActionPerformed
-    /*
-        Se encarga de cerrar la ventana donde se muestran los objetos disponibles
-        por si se desea cancelar la accion.        
-    */
-    private void cancelarObjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelarObjActionPerformed
-        objeto.dispose();
-    }//GEN-LAST:event_cancelarObjActionPerformed
-    
-    private void aceptarObjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aceptarObjActionPerformed
-        JLabel obj =new JLabel("holaaaaa");
-        objetos.add(obj);
-        obj.setVisible(true);
-        objetos.repaint();
-        objetos.updateUI();
-        
-        System.out.println(nombre);
-        System.out.println(obj.isVisible());
-        System.out.println(obj);
-        
-        
-        
-    }//GEN-LAST:event_aceptarObjActionPerformed
 
+   
     private void vNoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vNoItemStateChanged
         if(vNo.isSelected()){
             tipoV.setVisible(false);
@@ -418,8 +451,11 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_vSiItemStateChanged
 
     private void ejemploBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ejemploBActionPerformed
-       String sql="SELECT codigo, identificacion, nombre, apellido, tipoID, id_rol FROM persona "
-               + "WHERE identificacion = "+ejemplo.getText().toString();
+       String sql="SELECT codigo, identificacion, persona.nombre, apellido, tipo_id.descripcion, rol.nombre "
+               + " FROM persona "
+               + " INNER JOIN tipo_id ON tipo_id.cod_tipo_id=persona.tipoID "
+               + " INNER JOIN rol ON rol.id_rol=persona.id_rol"
+               + " WHERE codigo = "+ejemplo.getText().toString();
        String[] registros= new String[5];
        Conect cc = new Conect();
        Connection CC = cc.conexion();
@@ -427,11 +463,13 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
             Statement sta= CC.createStatement();
             ResultSet res =sta.executeQuery(sql);
             if(res.next()){
-                
-                nombre.setText(res.getString("nombre"));
+                codigo=res.getString("codigo").toString();
+                nombre.setText(res.getString("persona.nombre"));
                 apellidos.setText(res.getString("apellido").toString());
-                id.setText(res.getString("tipoID").toString()+" "+res.getString("identificacion").toString());
-                rol.setText(res.getString("id_rol").toString());
+                id.setText(res.getString("descripcion").toString()+" "+res.getString("identificacion").toString());
+                rol.setText(res.getString("rol.nombre").toString());
+                
+                vehiculosES();
                 
                 System.out.println("Exito");
             }
@@ -439,33 +477,174 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
            JOptionPane.showMessageDialog(null, "Error "+ex);
         }
     }//GEN-LAST:event_ejemploBActionPerformed
+    
+    void vehiculosES(){
+        String sql="SELECT * FROM vehiculoES"
+               + " INNER JOIN vehiculo USING(id_vehiculo)"
+               + " INNER JOIN tipo_vehi ON vehiculo.tipo_veh=tipo_vehi.cod_tipo_vehi"
+               + " WHERE vehiculoES.codigo="+codigo;
+      
+        Conect cc = new Conect();
+        Connection CC = cc.conexion();
+        try {
+            Statement sta= CC.createStatement();
+            ResultSet res =sta.executeQuery(sql);
+            if(res.next()){
+                tipoV.setText(res.getString("tipo_vehi.desc_tipo_vehi"));
+                placa.setText(res.getString("placa"));
+                vehiculoCOD=res.getString("id_vehiculo");
+                vSi.setSelected(true);
+            }
+            else{
+                vNo.setSelected(true);
+                vehiculoCOD="108";
+            }
+                
+        } catch (SQLException ex) {
+           JOptionPane.showMessageDialog(null, "Error "+ex);
+        }
+    }
+    
+    private void objetosESMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_objetosESMouseClicked
+        
+        if (evt.getClickCount() == 2) {
+           int row=objetosES.getSelectedRow();
+           String codigoOBJ=objetosES.getValueAt(row,4).toString();
+           String descobj=objetosES.getValueAt(row,0).toString();
+           modelist2.addElement(codigoOBJ);
+           modelist.addElement(descobj);
+           objeto.dispose();         
 
+        }
+    }//GEN-LAST:event_objetosESMouseClicked
+
+    private void listOBJValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listOBJValueChanged
+        codOBJ.setSelectedIndex(listOBJ.getSelectedIndex());
+    }//GEN-LAST:event_listOBJValueChanged
+
+    private void codOBJValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_codOBJValueChanged
+        listOBJ.setSelectedIndex(codOBJ.getSelectedIndex());
+    }//GEN-LAST:event_codOBJValueChanged
+
+    private void listOBJMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listOBJMouseClicked
+        if (evt.getClickCount() == 2) {
+          modelist.remove(listOBJ.getSelectedIndex());
+          modelist2.remove(codOBJ.getSelectedIndex());
+        }
+    }//GEN-LAST:event_listOBJMouseClicked
+
+    private void registrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarActionPerformed
+        String sql="SELECT id_E_S, fecha_E, fecha_S FROM entrada_salida"
+                   + " WHERE codigo="+codigo+" AND fecha_S='0000-00-00 00:00:00'";
+        Conect cone = new Conect();
+        Connection con=cone.conexion();
+        
+        try {
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery(sql);
+            
+            if(rs.next()){
+                String idES=rs.getString("id_E_S");
+                String fecha_E=rs.getString("fecha_E");
+                System.out.println(fecha_E+" "+idES);
+                sql="UPDATE entrada_salida SET fecha_E= '"+fecha_E+"', "
+                        + "fecha_S=NULL, operadorS=14 WHERE id_E_S="+idES;
+            
+                try {
+                    PreparedStatement pst=con.prepareStatement(sql);
+                   
+                    int n=pst.executeUpdate();
+                    if(n>0){
+                        JOptionPane.showMessageDialog(null, "Salida Guardada con Exito");                        
+                    }
+
+                } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, ex);
+                }
+                
+            }
+            else{
+                       
+                sql="INSERT INTO entrada_salida(fecha_S, id_vehiculo, codigo, operadorE, operadorS)"
+                        + "VALUES (0,"+vehiculoCOD+",?,?,?)";
+                
+                try {
+                    PreparedStatement pst=con.prepareStatement(sql);
+                    
+                    pst.setString(1, codigo);
+                    pst.setString(2, "15");     
+                    pst.setString(3, "15");
+                    int n=pst.executeUpdate();
+                    if(n>0){
+                        JOptionPane.showMessageDialog(null, "Registro Guardado con Exito");
+                    }
+
+                } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, ex);
+                }
+                
+                
+               
+                for(int i = 0; i < listOBJ.getModel().getSize(); i++){
+                    String codigoOBJ=codOBJ.getModel().getElementAt(i);
+                    sql="INSERT INTO e_sxobjetos VALUES ((SELECT id_E_S FROM entrada_salida"
+                            + " WHERE fecha_s='0000-00-00 00:00:00' AND codigo="+codigo+"),?)";
+                           
+
+                    try {
+                        PreparedStatement pst=con.prepareStatement(sql);
+                        pst.setString(1, codigoOBJ);
+
+                        int n=pst.executeUpdate();
+                        if(n>0){
+                            JOptionPane.showMessageDialog(null, "Objeto Guardado con Exito");
+                        }
+
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(null, ex);
+                    }
+                }
+                
+            }
+            
+        } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_registrarActionPerformed
+    
+    void imagen(){
+        ImageIcon imagen = new ImageIcon(getClass().getResource("../imagenes/subPlantillas.png"));
+        Image conversion =imagen.getImage();
+        Image tamaño =conversion.getScaledInstance(485,415, Image.SCALE_SMOOTH);
+        ImageIcon fin=new ImageIcon(tamaño);
+        fondo.setIcon(fin);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton accesorio;
-    private javax.swing.JButton aceptarObj;
     private javax.swing.JButton agregar;
     private javax.swing.JLabel apellidos;
-    private javax.swing.JButton cancelarObj;
     private javax.swing.ButtonGroup checkVehiculo;
+    private javax.swing.JList<String> codOBJ;
     private javax.swing.JPanel datos;
     private javax.swing.JTextField ejemplo;
     private javax.swing.JButton ejemploB;
-    private javax.swing.JRadioButton elemento;
-    private javax.swing.JRadioButton equipo;
-    private javax.swing.JPanel foto;
+    private javax.swing.JLabel fondo;
     private javax.swing.JLabel id;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JList<String> listOBJ;
     private javax.swing.JLabel nombre;
     private javax.swing.JFrame objeto;
-    private javax.swing.JScrollPane objetoScroll;
+    private javax.swing.JPanel objetoContent;
     private javax.swing.ButtonGroup objetoTipo;
     private javax.swing.JPanel objetos;
-    private javax.swing.JComboBox<String> opcion;
+    private javax.swing.JTable objetosES;
+    private javax.swing.JLabel operador;
     private javax.swing.JPanel persona;
     private javax.swing.JLabel placa;
+    private javax.swing.JButton registrar;
     private javax.swing.JLabel rol;
     private javax.swing.JLabel tipoV;
     private javax.swing.JRadioButton vNo;
