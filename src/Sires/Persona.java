@@ -126,6 +126,7 @@ public class Persona extends javax.swing.JInternalFrame {
                     JOptionPane.showMessageDialog(null, ex);
             }
         }
+        registros("");
     }
     void inhabilitar(){
         actualizar.setVisible(false);
@@ -763,36 +764,7 @@ public class Persona extends javax.swing.JInternalFrame {
         }
         catch (HeadlessException ex){
                 JOptionPane.showMessageDialog(null, "Error: "+ex+"\nInténtelo nuevamente", " .::Error En la Operacion::." ,JOptionPane.ERROR_MESSAGE);
-        } 
-        
-//        if (JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro de MODIFICAR este Usuario?","Usuario Modificado... ",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
-//            try{
-//                Conect cone = new Conect();
-//                Connection con=cone.conexion();
-//                String identificaciones, nombre, apellido, telefonos, correos, tId="null", idCentros="null", 
-//                        idRoles="null", claves, idEstado=null;
-//                identificaciones=identificacion.getText();
-//                nombre=nombres.getText();
-//                apellido=apellidos.getText();
-//                telefonos=telefono.getText();
-//                correos=correo.getText();
-//                
-//                int fila=tDatos.getSelectedRow();
-//                String sql="UPDATE persona \n SET id_estado=2 \n WHERE identificacion="+tDatos.getValueAt(fila,2);
-//	
-//                PreparedStatement prest=con.prepareStatement(sql);
-//                sent = con.createStatement();
-//                int n=prest.executeUpdate(sql);
-//                if(n>0){
-//                    registros();
-//                    JOptionPane.showMessageDialog(null, "Registro Eliminado con Exito");
-//                    limpiar();
-//                }
-//            }
-//            catch (SQLException ex){
-//                Logger.getLogger(Persona.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
+        }
     }//GEN-LAST:event_modificarActionPerformed
 
     private void buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarKeyReleased
@@ -802,12 +774,96 @@ public class Persona extends javax.swing.JInternalFrame {
 
     private void verMasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verMasActionPerformed
         // Ver personas con sus vehiculos u objetos:
-
+        jPanel3.setVisible(true);
+        jTabbedPane1.setSelectedIndex(2);
+        int fila=tDatos.getSelectedRow();
+        Conect cone = new Conect();
+        Connection con=cone.conexion();
+        
+        String [] titulos={"CODIGO","NOMBRES","APELLIDOS","TIPO ID","IDENTIFICACION","TELEFONO","CORREO","ROL","CENTRO"};
+        String [] registros=new String[9];
+        String sql="SELECT * \n"
+                + "FROM persona \n WHERE id_estado=1 AND codigo ="+tDatos.getValueAt(fila,0);
+        modelo=new DefaultTableModel(null,titulos);
+        try {
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery(sql);
+            while(rs.next()){
+                registros[0]=rs.getString("codigo");
+                registros[1]=rs.getString("nombre");
+                registros[2]=rs.getString("apellido");
+                registros[3]=rs.getString("tipoID");
+                registros[4]=rs.getString("identificacion");
+                registros[5]=rs.getString("telefono");
+                registros[6]=rs.getString("correo");
+                registros[7]=rs.getString("id_rol");
+                registros[8]=rs.getString("id_centro");
+                modelo.addRow(registros);
+            }
+            personaD.setModel(modelo);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        
+        String [] titulos2={"DESCRIPCION","SERIAL","MODELO","OBJETO"};
+        String [] registros2=new String[4];
+        String sql2="SELECT objetos.descripcion, serial, modelo, desc_obj\n" +
+                    "FROM persona\n" +
+                    "INNER JOIN entrada_salida\n" +
+                    "ON persona.codigo = entrada_salida.codigo\n" +
+                    "INNER JOIN e_sxobjetos\n" +
+                    "ON entrada_salida.id_E_S = e_sxobjetos.id_E_S\n" +
+                    "INNER JOIN objetos\n" +
+                    "ON e_sxobjetos.codigo = objetos.codigo\n" +
+                    "INNER JOIN tipo_obj\n" +
+                    "ON objetos.tipo_obj = tipo_obj.codigo_obj\n" +
+                    "WHERE persona.codigo ="+tDatos.getValueAt(fila,0);
+        modelo=new DefaultTableModel(null,titulos2);
+        try {
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery(sql2);
+            while(rs.next()){
+                registros2[0]=rs.getString("objetos.descripcion");
+                registros2[1]=rs.getString("serial");
+                registros2[2]=rs.getString("modelo");
+                registros2[3]=rs.getString("desc_obj");
+                modelo.addRow(registros2);
+            }
+            objetos.setModel(modelo);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        
+        String [] titulos3={"ID","TIPO","PLACA"};
+        String [] registros3=new String[3];
+        String sql3="SELECT id_vehiculo, desc_tipo_vehi, placa\n" +
+                    "FROM persona\n" +
+                    "INNER JOIN vehiculo\n" +
+                    "USING (codigo)\n" +
+                    "INNER JOIN tipo_vehi\n" +
+                    "ON vehiculo.tipo_veh = tipo_vehi.cod_tipo_vehi\n" +
+                    "WHERE persona.codigo ="+tDatos.getValueAt(fila,0);
+        modelo=new DefaultTableModel(null,titulos3);
+        try {
+            Statement st=con.createStatement();
+            ResultSet rs=st.executeQuery(sql3);
+            while(rs.next()){
+                registros3[0]=rs.getString("id_vehiculo");
+                registros3[1]=rs.getString("desc_tipo_vehi");
+                registros3[2]=rs.getString("placa");
+                modelo.addRow(registros3);
+            }
+            vehiculos.setModel(modelo);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_verMasActionPerformed
 
     private void actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarActionPerformed
         // Modificar los datos deseados:
         modificarPersona();
+        actualizar.setVisible(false);
+        registrar.setVisible(true);
     }//GEN-LAST:event_actualizarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
