@@ -99,9 +99,9 @@ public class Persona extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null,"Datos Incompletos Todos los campos son Obligatorios");
         }else{
             int fila=tDatos.getSelectedRow();
-            String sql="UPDATE persona set identificacion='"+identificaciones+"', nombre='"+nombre+"', apellido='"+apellido+"', \n"+
-                      " claves= '"+identificaciones+"', tipoID="+tId+", telefono='"+telefonos+"', correo='"+correos+"', id_rol="+idRoles+", id_centro="+idCentros+" \n"+
-                      "WHERE codigo = "+tDatos.getValueAt(fila,0);
+            String sql="UPDATE persona set identificacion=?, nombre=?, apellido=?, clave=?, "
+                    + "tipoID=?, telefono=?, correo=?, id_rol=?, id_centro=? "
+                    + "WHERE codigo="+tDatos.getValueAt(fila,0);
             Conect cone = new Conect();
             Connection con=cone.conexion();
             try {
@@ -109,13 +109,13 @@ public class Persona extends javax.swing.JInternalFrame {
                 pst.setString(1,identificaciones);
                 pst.setString(2,nombre);
                 pst.setString(3,apellido);
-                pst.setString(4,tId);
-                pst.setString(5,telefonos);
-                pst.setString(6,correos);
-                pst.setString(7,claves);
+                pst.setString(4,claves);
+                pst.setString(5,tId);
+                pst.setString(6,telefonos);
+                pst.setString(7,correos);
                 pst.setString(8,idRoles);
                 pst.setString(9,idCentros);
-                pst.setString(10,idEstado);
+                //pst.setString(10,idEstado);
                 int n=pst.executeUpdate();
                 if(n>0){
                     JOptionPane.showMessageDialog(null, "Registro Modificado con Exito");
@@ -716,7 +716,6 @@ public class Persona extends javax.swing.JInternalFrame {
 
     private void eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarMouseClicked
         // TODO add your handling code here:
-        
     }//GEN-LAST:event_eliminarMouseClicked
 
     private void tDatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tDatosMouseClicked
@@ -725,8 +724,6 @@ public class Persona extends javax.swing.JInternalFrame {
 
     private void modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarActionPerformed
         // MODIFICAR:
-//        jTabbedPane1.setEnabledAt(0, true); habilita la otra pestaña
-//        jTabbedPane1.setEnabledAt(1, false); deshabilita la otra pestaña
         registrar.setVisible(false);
         actualizar.setVisible(true);
         jPanel3.setVisible(true);
@@ -738,15 +735,16 @@ public class Persona extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
             }else{
                 modelo=(DefaultTableModel) tDatos.getModel();
-
+                
                 String nombre=(String) modelo.getValueAt(fila, 1);
                 String apellido=(String) modelo.getValueAt(fila, 2);
                 String tipo_id=(String)modelo.getValueAt(fila, 3);
                 String ident=(String)modelo.getValueAt(fila, 4);
                 String tel=(String)modelo.getValueAt(fila, 5);
                 String corr=(String)modelo.getValueAt(fila, 6);
-                String cent=(String)modelo.getValueAt(fila,7);
-                String rol=(String)modelo.getValueAt(fila,8);
+                String rol=(String)modelo.getValueAt(fila, 7);
+                String cent=(String)modelo.getValueAt(fila, 8);
+                
                 int tip_id, idCent, idRo;
                 
                 tip_id = Integer.parseInt(tipo_id);

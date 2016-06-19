@@ -12,7 +12,7 @@ public class Conect {
     public Connection conexion(){
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            conectar =(Connection) DriverManager.getConnection("jdbc:mysql://localhost/sires", "root", "");
+            conectar =(Connection) DriverManager.getConnection("jdbc:mysql://localhost/sires2", "root", "");
             System.out.println("conexion establecida");
         }
         catch (ClassNotFoundException | SQLException e){
