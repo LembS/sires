@@ -154,7 +154,7 @@ public class Principal extends javax.swing.JFrame {
     void portada(){
         ImageIcon imagen = new ImageIcon(getClass().getResource("../imagenes/sires.png"));
         Image conversion =imagen.getImage();
-        Image tamaño =conversion.getScaledInstance(783,575, Image.SCALE_SMOOTH);
+        Image tamaño =conversion.getScaledInstance(822,822, Image.SCALE_SMOOTH);
         ImageIcon fin=new ImageIcon(tamaño);
         jLabel5.setIcon(fin);
     }

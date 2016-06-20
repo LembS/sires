@@ -58,7 +58,8 @@ public class vehiculosES extends javax.swing.JInternalFrame {
         };
         jLabel1 = new javax.swing.JLabel();
 
-        setOpaque(false);
+        setClosable(true);
+        setIconifiable(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         datos.setOpaque(false);

@@ -144,6 +144,9 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
+        setClosable(true);
+        setIconifiable(true);
+
         persona.setOpaque(false);
 
         datos.setOpaque(false);

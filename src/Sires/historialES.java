@@ -60,6 +60,9 @@ public class historialES extends javax.swing.JInternalFrame {
         historialOBJS = new javax.swing.JTable();
         fondo = new javax.swing.JLabel();
 
+        setClosable(true);
+        setIconifiable(true);
+
         jScrollPane1.setOpaque(false);
 
         historialES.setModel(new javax.swing.table.DefaultTableModel(
