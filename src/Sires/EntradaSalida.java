@@ -8,6 +8,7 @@
 package Sires;
 
 
+import java.awt.Component;
 import java.awt.Image;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,6 +20,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 /* AUTHOR ADSI-108
  *Version del software 1.0
@@ -426,6 +429,7 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
                 modelo.addRow(registros);
             }
             objetosES.setModel(modelo);
+            resizeColumnWidth(objetosES);
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -433,7 +437,19 @@ public class EntradaSalida extends javax.swing.JInternalFrame {
         
         
     }//GEN-LAST:event_agregarActionPerformed
-
+    
+    public void resizeColumnWidth(JTable table) {
+        final TableColumnModel columnModel = table.getColumnModel();
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            int width = 50; // Min width
+            for (int row = 0; row < table.getRowCount(); row++) {
+                TableCellRenderer renderer = table.getCellRenderer(row, column);
+                Component comp = table.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width +1 , width);
+            }
+            columnModel.getColumn(column).setPreferredWidth(width);
+        }
+    }
    
     private void vNoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_vNoItemStateChanged
         if(vNo.isSelected()){

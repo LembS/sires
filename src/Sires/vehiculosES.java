@@ -232,7 +232,7 @@ public class vehiculosES extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_ejemploBActionPerformed
-
+    
     private void vehiculosESMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vehiculosESMouseClicked
         if (evt.getClickCount() == 2) {
             int row=vehiculosES.getSelectedRow();
